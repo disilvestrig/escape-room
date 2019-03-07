@@ -1,0 +1,19 @@
+{
+    "Q": {
+        "name": "quadro",
+        "description": "e' proprio un bel quadro",
+        "color": "blueg"
+    },
+
+    "P": {
+        "name": "pianta",
+        "description": "questa pianta non viene annaffiata da molto tempo",
+        "color": "green"
+    },
+
+    "C": {
+        "name": "candelabro",
+        "description": "un vecchio candelabro arrugginito",
+        "color": "yellow"
+    }
+}
