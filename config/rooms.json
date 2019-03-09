@@ -1,0 +1,13 @@
+{
+    "0": {
+        "name": "Sala",
+        "description": "Questo luogo e' abbastanza accogliente nonoste il senso di claustrofobia che ti trasmette",
+        "color": "white"
+    },
+
+    "1": {
+        "name": "Cucina",
+        "description": "E' tutto molto disordinato. Sembra che nessuno abbia riordinato da molto tempo",
+        "color": "red"
+    }
+}

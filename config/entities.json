@@ -1,0 +1,118 @@
+{
+    "B": {
+        "name": "bomba",
+        "description": "e' una bomba pronta a detonare, devo sbrigarmi a disinnescarla!",
+        "color": "red",
+        "interactions": {
+            "no-item": {
+                "message": "biiiip biiiiiiip biiiiiiiiiiiip",
+                "game_over": "la bomba esplode demolendo l'intera stanza"
+            },
+            "V": {
+                "message": "tagli con attenzione un filo che penzola da un lato dell'ordigno...",
+                "win": "hai disinnescato la bomba con successo, sei sano e salvo!"
+            }
+        }
+    },
+    "1": {
+        "name": "porta",
+        "description": "e' una porta",
+        "color": "blue",
+        "interactions": {
+            "no-item": {
+                "message": "si apre",
+                "move_to_room": 1
+            }
+        }
+    },
+    "0": {
+        "name": "porta",
+        "description": "e' una porta",
+        "color": "blue",
+        "interactions": {
+            "no-item": {
+                "message": "si apre",
+                "move_to_room": 0
+            }
+        }
+    },
+    "Q": {
+        "name": "quadro",
+        "description": "e' proprio un bel quadro",
+        "color": "blue",
+        "interactions": {
+            "no-item": {
+                "message": "spostando il quadro ti accorgi che dietro nasconte una cassaforte",
+                "transform": "F"
+            }
+        }
+    },
+
+    "F": {
+        "name": "cassaforte",
+        "description": "e' una cassaforte chiusa",
+        "color": "yellow",
+        "interactions": {
+            "K": {
+                "message": "la chiave entra perfettamente nella serratura; la giri",
+                "transform": "V"
+            }
+        }
+    },
+
+    "V": {
+        "name": "Tenaglie",
+        "description": "sono delle tenaglie piuttosto affilate",
+        "color": "green",
+        "interactions": {
+            "no-item": {
+                "message": "le raccogli",
+                "transform": " ",
+                "pickup": true
+            }
+        }
+    },
+
+    "P": {
+        "name": "pianta",
+        "description": "questa pianta non viene annaffiata da molto tempo",
+        "color": "green",
+        "interactions": {
+            "no-item": {
+                "message": "spostando il vaso noti qualcosa di interessante",
+                "transform": "K"
+            }
+        }
+    },
+
+    "C": {
+        "name": "candelabro",
+        "description": "un vecchio candelabro arrugginito",
+        "color": "yellow"
+    },
+
+    "K": {
+        "name": "chiave",
+        "description": "e' una piccola chiave",
+        "color": "yellow",
+        "interactions": {
+            "no-item": {
+                "message": "la raccogli",
+                "transform": " ",
+                "pickup": true
+            }
+        }
+    },
+
+    "T": {
+        "name": "interruttore",
+        "description": "e' un interruttore posizionato su ACCESO",
+        "color": "da_black"
+    },
+
+    "Y": {
+        "name": "interruttore",
+        "description": "e' un interruttore posizionato su SPENTO",
+        "color": "da_black"
+    }
+}

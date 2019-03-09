@@ -32,25 +32,55 @@ class Entity:
         self.name = name
         self.description = description
         self.interactions = interactions
+        self.game = self.room.game
 
     def set(self, graphic, definition):
         self.graphic = graphic
         self.color = getattr(bg, definition["color"])
         self.name = definition["name"]
         self.description = definition["description"]
+        self.interactions = definition.get("interactions")
 
     def interact(self, item=None):
-        if self.description:
-            print(self.description)
-
         if self.interactions:
-            if item in self.interactions:
-                self.interactions[item]()
-            else:
-                if item is None and "no-item" in self.interactions:
-                    self.interactions["no-item"]()
-                else:
-                    print(choice(WRONG_INTERACTION_RESPONSES))
+            action = None
+
+            if item is not None and item.graphic in self.interactions:
+                action = self.interactions[item.graphic]
+            elif item is None and "no-item" in self.interactions:
+                action = self.interactions["no-item"]
+
+            if action is not None:
+                player = self.game.player
+
+                if "message" in action:
+                    print(action["message"])
+
+                if "transform" in action:
+                    transform = action["transform"]
+                    if transform == " ":
+                        self.room.entities.remove(self)
+                    else:
+                        self.set(transform, Game.config["entities"][transform])
+
+                if "pickup" in action:
+                    player.inventory[self.graphic] = self
+
+                if item is not None:
+                    del player.inventory[item.graphic]
+
+                if "move_to_room" in action:
+                    player.change_room(self.game.rooms[action["move_to_room"]])
+
+                if "game_over" in action:
+                    self.game.game_over(action["game_over"])
+
+                if "win" in action:
+                    self.game.win(action["win"])
+
+                return
+
+        print(choice(WRONG_INTERACTION_RESPONSES))
 
     def __str__(self):
         return self.color + " " + self.graphic + " " + fg.rs + bg.rs
@@ -59,6 +89,17 @@ class Entity:
 class Mobile(Entity):
     def __init__(self, room, x, y, graphic, color):
         Entity.__init__(self, room, x, y, graphic, color)
+
+    def change_room(self, room):
+        from_room_number = self.room.number
+        self.room = room
+        for entity in self.room.entities:
+            if entity.graphic == str(from_room_number):
+                self.x = entity.x
+                self.y = entity.y
+                break
+        else:
+            raise Exception("this room has no {} door".format(from_room_number))
 
     def move(self, direction):
         if direction == Directions.N and self.y > 0 and self.room.get_entity_at_coords(self.x, self.y - 1) is None:
@@ -72,18 +113,17 @@ class Mobile(Entity):
 
 
 class Player(Mobile):
-    def __init__(self, x, y):
-        Mobile.__init__(self, None, x, y, "P", bg.blue)
-        self.inventory = []
+    def __init__(self, room, x, y):
+        Mobile.__init__(self, room, x, y, "P", bg.blue)
+        self.inventory = {}
 
     def draw_inventory(self):
-        print("Inventory:")
-        l = len(self.inventory)
-        if l == 0:
+        print("Inventario:")
+        if len(self.inventory) == 0:
             print("\t- empty")
         else:
-            for i in range(l):
-                print("\t- {}. {}".format(i, self.inventory[i]))
+            for entity in self.inventory.values():
+                print("\t- {} {}: {}".format(entity, entity.name, entity.description))
 
     def change_player_room(self, room):
         # self.room.number
@@ -108,20 +148,37 @@ class Wall(Entity):
 
 
 class Game:
-    file = open("./entities.json")
-    items = json.load(file)
-    file.close()
+    config = {}
+    for key in ("entities", "rooms", "game"):
+        file = open("./config/{}.json".format(key))
+        config[key] = json.load(file)
+        file.close()
 
     def __init__(self):
-        self.player = Player(1, 1)
         self.rooms = []
-        for i in range(1):
-            self.rooms.append(Room(i, self.player))
+        for i in range(len(Game.config["rooms"])):
+            room_data = Game.config["rooms"][str(i)]
+            self.rooms.append(Room(self, i, room_data["color"], room_data["name"], room_data["description"]))
 
-        self.player.room = self.rooms[0]
+        self.player = Player(self.rooms[Game.config["game"]["start_room"]], *Game.config["game"]["start_coords"])
+
+        for room in self.rooms:
+            room.entities.insert(0, self.player)
 
     def get_current_room(self):
         return self.player.room
+
+    def win(self, message):
+        print(message)
+        print(fg.green + "HAI VINTO!" + fg.rs)
+        input()
+        exit()
+
+    def game_over(self, message):
+        print(message)
+        print(fg.red + "HAI PERSO!" + fg.rs)
+        input()
+        exit()
 
     def update(self):
         if IS_WINDOWS:
@@ -135,10 +192,13 @@ class Game:
         self.player.draw_inventory()
         print()
         print("Azioni:")
-        print("\t- muovi premendo W A S D")
+        print("\t- muovi con W A S D")
         nearby_entities = self.player.get_nearby_entities()
-        for e in nearby_entities:
-            print("\t- interagisci con {} premendo {}".format(e.name, e))
+        for entity in nearby_entities:
+            print("\t- {}: {}; interagisci con {}".format(entity.name, entity.description, entity))
+            for inventory_entity in self.player.inventory.values():
+                print("\t- usa {} con {} con {}{}".format(inventory_entity.name, entity.name, inventory_entity, entity))
+
         print("\t- QUIT per uscire")
 
         action = input().upper()
@@ -153,31 +213,42 @@ class Game:
         elif action == "QUIT":
             quit()
         else:
-            for e in nearby_entities:
-                if action == e.graphic:
-                    e.interact()
+            item = None
+            if len(action) > 1:
+                action = action.replace(" ", "")
+                item = self.player.inventory.get(action[0])
+                action = action[1]
+
+            for entity in nearby_entities:
+                if action == entity.graphic:
+                    entity.interact(item)
                     input("premi un tasto per continuare...")
                     break
 
 
 class Room:
-    def __init__(self, number, player):
+    def __init__(self, game, number, color, name, description):
+        self.game = game
         self.number = number
-        file = open("./rooms/{}.room".format(number))
+        self.color = getattr(bg, color)
+        self.name = name
+        self.description = description
+
+        file = open("./config/{}.room".format(number))
         rows = file.readlines()
         file.close()
         self.h = len(rows)
         self.w = len(rows[0]) - 1
-        self.entities = [player]
+        self.entities = []
 
         for y in range(self.h):
             for x in range(self.w):
                 char = rows[y][x].upper()
                 if char == "#":
                     self.entities.append(Wall(self, x, y))
-                elif char in Game.items:
+                elif char in Game.config["entities"]:
                     e = Entity(self, x, y)
-                    e.set(char, Game.items[char])
+                    e.set(char, Game.config["entities"][char])
                     self.entities.append(e)
 
     def get_entity_at_coords(self, x, y):
@@ -186,13 +257,15 @@ class Room:
                 return e
 
     def draw(self):
+        print(self.name)
+        print(self.description)
         for y in range(self.h):
             for x in range(self.w):
                 e = self.get_entity_at_coords(x, y)
                 if e:
                     print(e, end="")
                 else:
-                    print(bg.da_red + "   " + bg.rs, end="")
+                    print(self.color + "   " + bg.rs, end="")
             print()
 
 
