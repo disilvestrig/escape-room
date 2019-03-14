@@ -8,7 +8,7 @@ WRONG_INTERACTION_RESPONSES = [
     "non succede nulla",
     "non funziona",
     "niente da fare",
-    "non credo sia la cosa giustsa da fare",
+    "non credo sia la cosa giusta da fare",
     "non credo proprio",
     "non e'il caso"
 ]
@@ -66,7 +66,7 @@ class Entity:
                 if "pickup" in action:
                     player.inventory[self.graphic] = self
 
-                if item is not None:
+                if item is not None and action.get("remove_from_inventory", False) == True :
                     del player.inventory[item.graphic]
 
                 if "move_to_room" in action:
@@ -120,7 +120,7 @@ class Player(Mobile):
     def draw_inventory(self):
         print("Inventario:")
         if len(self.inventory) == 0:
-            print("\t- empty")
+            print("\t- vuoto")
         else:
             for entity in self.inventory.values():
                 print("\t- {} {}: {}".format(entity, entity.name, entity.description))
