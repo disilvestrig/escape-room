@@ -1,6 +1,5 @@
 import json
 from os import system
-from sty import fg, bg
 from random import choice
 import sys
 
@@ -13,6 +12,35 @@ WRONG_INTERACTION_RESPONSES = [
     "non e'il caso"
 ]
 IS_WINDOWS = sys.platform.lower() == "win32"
+
+class Fg: 
+    rs="\033[00m"
+    black='\033[30m'
+    red='\033[31m'
+    green='\033[32m'
+    orange='\033[33m'
+    blue='\033[34m'
+    purple='\033[35m'
+    cyan='\033[36m'
+    lightgrey='\033[37m'
+    darkgrey='\033[90m'
+    lightred='\033[91m'
+    lightgreen='\033[92m'
+    yellow='\033[93m'
+    lightblue='\033[94m'
+    pink='\033[95m'
+    lightcyan='\033[96m'
+
+class Bg: 
+    rs="\033[00m"
+    black='\033[40m'
+    red='\033[41m'
+    green='\033[42m'
+    yellow='\033[43m'
+    blue='\033[44m'
+    magenta='\033[45m'
+    cyan='\033[46m'
+    white='\033[47m'
 
 
 class Directions:
@@ -36,7 +64,7 @@ class Entity:
 
     def set(self, graphic, definition):
         self.graphic = graphic
-        self.color = getattr(bg, definition["color"])
+        self.color = getattr(Bg, definition["color"])
         self.name = definition["name"]
         self.description = definition["description"]
         self.interactions = definition.get("interactions")
@@ -83,7 +111,7 @@ class Entity:
         print(choice(WRONG_INTERACTION_RESPONSES))
 
     def __str__(self):
-        return self.color + " " + self.graphic + " " + fg.rs + bg.rs
+        return self.color + " " + self.graphic + " " + Fg.rs + Bg.rs
 
 
 class Mobile(Entity):
@@ -114,7 +142,7 @@ class Mobile(Entity):
 
 class Player(Mobile):
     def __init__(self, room, x, y):
-        Mobile.__init__(self, room, x, y, "P", bg.blue)
+        Mobile.__init__(self, room, x, y, "P", Bg.blue)
         self.inventory = {}
 
     def draw_inventory(self):
@@ -144,7 +172,7 @@ class Player(Mobile):
 
 class Wall(Entity):
     def __init__(self, room, x, y):
-        Entity.__init__(self, room, x, y, " ", bg.da_black)
+        Entity.__init__(self, room, x, y, " ", Bg.black)
 
 
 class Game:
@@ -170,13 +198,13 @@ class Game:
 
     def win(self, message):
         print(message)
-        print(fg.green + "HAI VINTO!" + fg.rs)
+        print(Fg.green + "HAI VINTO!" + Fg.rs)
         input()
         exit()
 
     def game_over(self, message):
         print(message)
-        print(fg.red + "HAI PERSO!" + fg.rs)
+        print(Fg.red + "HAI PERSO!" + Fg.rs)
         input()
         exit()
 
@@ -230,7 +258,7 @@ class Room:
     def __init__(self, game, number, color, name, description):
         self.game = game
         self.number = number
-        self.color = getattr(bg, color)
+        self.color = getattr(Bg, color)
         self.name = name
         self.description = description
 
@@ -265,7 +293,7 @@ class Room:
                 if e:
                     print(e, end="")
                 else:
-                    print(self.color + "   " + bg.rs, end="")
+                    print(self.color + "   " + Bg.rs, end="")
             print()
 
 

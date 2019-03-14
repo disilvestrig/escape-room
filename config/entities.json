@@ -189,7 +189,7 @@
     "+": {
         "name": "interruttore",
         "description": "e' un interruttore posizionato su ACCESO",
-        "color": "da_black",
+        "color": "black",
         "interactions": {
             "no-item": { 
                 "message": "lo premi",
@@ -201,7 +201,7 @@
     "-": {
         "name": "interruttore",
         "description": "e' un interruttore posizionato su SPENTO",
-        "color": "da_black",
+        "color": "black",
         "interactions": {
             "no-item": { 
                 "message": "lo premi",
