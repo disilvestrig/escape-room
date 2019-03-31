@@ -38,7 +38,7 @@
     },
     "B": {
         "name": "bomba",
-        "description": "e' una bomba pronta a detonare, devo sbrigarmi a disinnescarla!",
+        "description": "e' una bomba (no doppi sensi!)",
         "color": "red",
         "interactions": {
             "no-item": {
@@ -48,7 +48,8 @@
 
             "V": {
                 "message": "tagli con attenzione un filo che penzola da un lato dell'ordigno...",
-                "win": "hai disinnescato la bomba con successo, sei sano e salvo!"
+                "pickup": true,
+                "transform": " " 
             },
 
             "L": {
@@ -86,6 +87,17 @@
             "no-item": {
                 "message": "si apre",
                 "move_to_room": 0
+            }
+        }
+    },
+    "3": {
+        "name": "porta",
+        "description": "e' una porta",
+        "color": "blue",
+        "interactions": {
+            "no-item": {
+                "message": "si apre",
+                "move_to_room": 3
             }
         }
     },
@@ -208,5 +220,15 @@
                 "transform": "+"
             }
         }  
+    },
+    "R": {"name": "statua",
+    "description": "statua di pietra ancora in buone condizioni... ha un qualcosa di strano",
+    "color" : "magenta",
+    "interactions" : {"no-item":{"message":"Sbatti il mignolo sulla statua e perdi la cristianità"},
+                      "B":{"message":"fai esplodere la bomba e distruggi la statua",
+                      "transform":" "
+            }
+        }
     }
+
 }

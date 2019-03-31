@@ -15,5 +15,10 @@
         "name": "Sogno",
         "description": "sei evidentemente in un sogno",
         "color": "black"
-    }
+    },
+    "3": {
+        "name": "Corridoio",
+        "description": "Chissà dove porta",
+        "color": "yellow"
+}
 }
