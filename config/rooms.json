@@ -1,24 +1,24 @@
 {
     "0": {
-        "name": "Sala",
-        "description": "Questo luogo e' abbastanza accogliente nonostante il senso di claustrofobia che ti trasmette",
+        "name": "Stanza iniziale",
+        "description": "Sembra ci siano tante cose da analizzare",
         "color": "white"
     },
 
     "1": {
-        "name": "Cucina",
-        "description": "E' tutto molto disordinato. Sembra che nessuno abbia riordinato da molto tempo",
-        "color": "red"
+        "name": "Cortile",
+        "description": "E' molto grande",
+        "color": "white"
     },
     
     "2": {
-        "name": "Sogno",
-        "description": "sei evidentemente in un sogno",
-        "color": "black"
+        "name": "Biblioteca",
+        "description": "Il tempio del sapere",
+        "color": "white"
     },
     "3": {
         "name": "Corridoio",
         "description": "Chissà dove porta",
-        "color": "yellow"
+        "color": "white"
 }
 }

@@ -1,43 +1,31 @@
 {
-    "O": {
-        "name": "coccinella",
+    "P": {
+        "name": "Pidgeot",
         "color": "red",
-        "description": "che bella!",
+        "description": "Ice Ice flex flex",
         "interactions":  {
             "no-item": {
-                "message": "la schiacci",
+                "message": "Lo prendi",
+                "pickup": true,
                 "transform": " "
             }
         }
     },
-    "H": {
-        "name": "idrogeno",
-        "description": "e' dell'idrogeno, non chiedermi come fai a percepirlo...",
-        "color": "magenta",
-        "interactions": {
-            "no-item": {
-                "message": "ma scusa... cosa ti aspetti di fare esattamente con l'idrogeno..."
-            },
-            "L": {
-                "message": "opppero'! hai condito le lasagne con l'idrogeno sprigionando una reazione unicornosa",
-                "transform": "U"
-            }
-        }
-    },
+
     "L": {
-        "name": "lasagne",
-        "description": "sembrano appetitose",
+        "name": "Mirum Iter",
+        "description": "Ego perventus sum... chissà cosa vuol dire",
         "color": "green",
         "interactions": {
             "no-item": {
-                "message": "fa sempre comodo avere delle lasagne in tasca",
+                "message": "Oh finalmente ho qualcosa per parificare le sedie",
                 "transform": " ",
                 "pickup": true
             }
         }
     },
     "B": {
-        "name": "bomba",
+        "name": "",
         "description": "e' una bomba (no doppi sensi!)",
         "color": "red",
         "interactions": {
@@ -48,8 +36,7 @@
 
             "V": {
                 "message": "tagli con attenzione un filo che penzola da un lato dell'ordigno...",
-                "pickup": true,
-                "transform": " " 
+                "pickup": true 
             },
 
             "L": {
@@ -69,13 +56,13 @@
         }
     },
     "2": {
-        "name": "porta",
-        "description": "e' una porta",
+        "name": "Botola",
+        "description": "si può aprire ",
         "color": "blue",
         "interactions": {
             "no-item": {
-                "message": "quale porta scusa???",
-                "transform": "L"
+                "message": "Entri",
+                "move_to_room" : 2
             }
         }
     },
@@ -139,18 +126,6 @@
         }
     },
 
-    "P": {
-        "name": "pianta",
-        "description": "questa pianta non viene annaffiata da molto tempo",
-        "color": "green",
-        "interactions": {
-            "no-item": {
-                "message": "spostando il vaso noti qualcosa di interessante",
-                "transform": "K"
-            }
-        }
-    },
-
     "C": {
         "name": "candelabro",
         "description": "un vecchio candelabro arrugginito",
@@ -168,19 +143,19 @@
         }
     },
 
-    "U": {
-        "name": "unicorno",
-        "description": "che splendido esemplare fatato!",
+    "Z": {
+        "name": "Arminio",
+        "description": "puzza di birra e non sa nemmeno il greco",
         "color": "blue",
         "interactions": {
             "no-item": {
-                "message": "che splendida sensazione",
-                "win": "voli via contento e vivrai una vita fatta di soddisfazioni cucciolose"
+                "message": "Bar Bar",
+                "game_over": "Ti sei fatto beccare"
             },
 
             "L": {
-                "message": "quello che una volta  era un leggiadro  unicorno ora e' un unicorno obeso! non volera' mai piu'",
-                "game_over": "peccato!"
+                "message": "Usi latinorum, il barbaro è così confuso da colpirsi da solo",
+                "transform": "K"
             }
         }
     },
@@ -198,29 +173,6 @@
         }
     },
 
-    "+": {
-        "name": "interruttore",
-        "description": "e' un interruttore posizionato su ACCESO",
-        "color": "black",
-        "interactions": {
-            "no-item": { 
-                "message": "lo premi",
-                "transform": "-"
-            }
-        }
-    },
-
-    "-": {
-        "name": "interruttore",
-        "description": "e' un interruttore posizionato su SPENTO",
-        "color": "black",
-        "interactions": {
-            "no-item": { 
-                "message": "lo premi",
-                "transform": "+"
-            }
-        }  
-    },
     "R": {"name": "statua",
     "description": "statua di pietra ancora in buone condizioni... ha un qualcosa di strano",
     "color" : "magenta",
@@ -229,6 +181,23 @@
                       "transform":" "
             }
         }
-    }
-
-}
+    },
+    "I": {"name":"pennarello",
+    "description" : "C'è scritto 'di TCG' ",
+    "color" : "cyan",
+    "interactions" : {"no-item":{"message":"È un pennarello",
+                      "pickup":true,
+                      "transform" : " "}}},
+    "G": {"name" : "Barbaro",
+    "description" : "sembra stia dormendo",
+    "color" : "red",
+    "interactions" : {"no-item":{"message":"mentre ti avvicini molla improvvisamente una scoreggia"},
+                      "I":{"message": "gli disegni sulla faccia con il pennarello"},
+                      "F":{"message": "Pidgeot fa fuori la guardia",
+                      "transform" : " "}}},
+    "-":{"name":"porta",
+    "description":"è chiusa a chiave",
+    "color": "yellow",
+    "interactions":{"no-item":{"messsage":"non si apre"},
+                   "K":{"message":"si apre",
+                   "transform": " "}}}}
