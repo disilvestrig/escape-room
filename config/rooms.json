@@ -20,5 +20,10 @@
         "name": "Corridoio",
         "description": "Chissà dove porta",
         "color": "white"
-}
-}
+    },
+    "4": {
+        "name": "Labirinto",
+        "description": "",
+        "color": "white"
+    }
+}  
