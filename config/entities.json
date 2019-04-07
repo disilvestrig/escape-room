@@ -254,6 +254,17 @@
                     "transform": " "}
         }
     },
+    "O": {
+    "name": "medaglia",
+    "description": "e' una medaglia",
+    "color": "yellow",
+    "interactions": {
+        "no-item": {
+            "message": "bravo hai vinto",
+            "win": "hai vinto bravo"
+            }
+        }
+    },
     "X":{"name":"giullare",
          "description":"Sta cercando qualcuno",
          "color":"magenta",

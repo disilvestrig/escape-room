@@ -309,7 +309,7 @@ class Game:
             elif v == "W":
                 m.move(Directions.W,self.player.x,self.player.y)
         for i in monsters:
-            if [i.x,i.y] == [self.player.x,self.player.y] and self.player.get_current_room() == self.monster1.get_current_room_monster():
+            if [i.x,i.y] == [self.player.x,self.player.y] and self.get_current_room() == self.get_current_room_monster():
                 g.game_over("Ti sei fatto prendere ,peccato")
  
 

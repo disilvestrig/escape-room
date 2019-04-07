@@ -28,5 +28,10 @@
     },
     "5":{"name":"Sala da pranzo",
     "description":" Sembra pronta al banchetto",
-    "color":"white"}
+    "color":"white"
+    },
+    "6":{"name":"Sala finale",
+    "description":"manca poco...",
+    "color":"white"
+    }
 }  
