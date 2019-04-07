@@ -25,5 +25,8 @@
         "name": "Labirinto",
         "description": "",
         "color": "white"
-    }
+    },
+    "5":{"name":"Sala da pranzo",
+    "description":" Sembra pronta al banchetto",
+    "color":"white"}
 }  

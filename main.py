@@ -2,6 +2,8 @@ import json
 from os import system
 from random import choice
 import sys
+from minigioco import minigame
+
 
 WRONG_INTERACTION_RESPONSES = [
     "non succede nulla",
@@ -106,8 +108,12 @@ class Entity:
 
                 if "win" in action:
                     self.game.win(action["win"])
+                if "game" in action:
+                    minigame.gameLoop()
+                    print("Bella partita prendi questa chiave come ricompensa")
+                    self.set("K", Game.config["entities"]["K"])
                     
-
+ 
 
 
 
@@ -178,6 +184,8 @@ class Player(Mobile):
 class Monster(Mobile):
     def __init__(self, room, x, y):
         Mobile.__init__(self, room, x, y, "M", Bg.red)
+        self.description = "Occhio non farti prendere"
+        self.name = "Mostro del labirinto"
 
     def __str__(self):
         return self.color + " " + self.graphic + " " + Fg.rs + Bg.rs
@@ -229,6 +237,8 @@ class Game:
 
     def get_current_room(self):
         return self.player.room
+    def get_current_room_monster(self):
+        return self.monster1.room
 
     def win(self, message):
         print(message)
@@ -299,7 +309,7 @@ class Game:
             elif v == "W":
                 m.move(Directions.W,self.player.x,self.player.y)
         for i in monsters:
-            if [i.x,i.y] == [self.player.x,self.player.y]:
+            if [i.x,i.y] == [self.player.x,self.player.y] and self.player.get_current_room() == self.monster1.get_current_room_monster():
                 g.game_over("Ti sei fatto prendere ,peccato")
  
 

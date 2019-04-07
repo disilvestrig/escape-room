@@ -101,6 +101,28 @@
         }
     }
     },
+    "5": {
+    "name": "porta",
+    "description": "e' una porta",
+    "color": "blue",
+    "interactions": {
+        "no-item": {
+            "message": "si apre",
+            "move_to_room": 5
+        }
+    }
+    },
+    "6": {
+    "name": "porta",
+    "description": "e' una porta",
+    "color": "blue",
+    "interactions": {
+        "no-item": {
+            "message": "si apre",
+            "move_to_room": 6
+        }
+    }
+    },
 
     "Q": {
         "name": "Tavolo degli attrezzi",
@@ -231,7 +253,14 @@
                         "pickup":true,
                     "transform": " "}
         }
-    }
+    },
+    "X":{"name":"giullare",
+         "description":"Sta cercando qualcuno",
+         "color":"magenta",
+         "interactions":{"no-item":{"message":"Ehi tu gioca a tris con me",
+         "game":true}}},
+    "":{"name":"tavola",
+    "description":"é apparecchiata",
+    "color":"cyan",
+    "interactions":{"no-item":{"message":"Arraffi un pezzo di pane e lo addenti"}}}
 }
-
-
