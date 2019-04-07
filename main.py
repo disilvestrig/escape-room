@@ -41,6 +41,7 @@ class Bg:
     magenta='\033[45m'
     cyan='\033[46m'
     white='\033[47m'
+    x = '\033[39m'
 
 
 class Directions:
@@ -69,7 +70,7 @@ class Entity:
         self.description = definition["description"]
         self.interactions = definition.get("interactions")
 
-    def interact(self, item=None):
+    def interact(self,item=None):
         if self.interactions:
             action = None
 
@@ -105,6 +106,11 @@ class Entity:
 
                 if "win" in action:
                     self.game.win(action["win"])
+                    
+
+
+
+
 
                 return
 
@@ -169,6 +175,22 @@ class Player(Mobile):
 
         return nearby_entities
 
+class Monster(Mobile):
+    def __init__(self, room, x, y):
+        Mobile.__init__(self, room, x, y, "M", Bg.red)
+
+    def __str__(self):
+        return self.color + " " + self.graphic + " " + Fg.rs + Bg.rs
+
+    def move(self, direction,px,py):
+        if direction == Directions.N and self.y > 0 and self.room.get_entity_at_coords(self.x, self.y - 1) is None or [self.x,self.y-1] == [px,py] :
+            self.y -= 1
+        elif direction == Directions.S and self.y < self.room.h - 1 and self.room.get_entity_at_coords(self.x, self.y + 1) is None or [self.x,self.y+1] == [px,py]:
+            self.y += 1
+        elif direction == Directions.W and self.x > 0 and self.room.get_entity_at_coords(self.x - 1, self.y) is None or [self.x-1,self.y] == [px,py]:
+            self.x -= 1
+        elif direction == Directions.E and self.x < self.room.w - 1 and self.room.get_entity_at_coords(self.x + 1, self.y) is None or [self.x+1,self.y] == [px,py]:
+            self.x += 1
 
 class Wall(Entity):
     def __init__(self, room, x, y):
@@ -188,10 +210,22 @@ class Game:
             room_data = Game.config["rooms"][str(i)]
             self.rooms.append(Room(self, i, room_data["color"], room_data["name"], room_data["description"]))
 
-        self.player = Player(self.rooms[Game.config["game"]["start_room"]], *Game.config["game"]["start_coords"])
+        self.player = Player(self.rooms[Game.config["game"]["start_roomp"]], *Game.config["game"]["start_coordsp"])
+        self.monster1 = Monster(self.rooms[Game.config["game"]["start_roomm1"]], *Game.config["game"]["start_coordsm1"])
+        self.monster2 = Monster(self.rooms[Game.config["game"]["start_roomm2"]], *Game.config["game"]["start_coordsm2"])
+        self.monster3 = Monster(self.rooms[Game.config["game"]["start_roomm3"]], *Game.config["game"]["start_coordsm3"])
+        self.monster4 = Monster(self.rooms[Game.config["game"]["start_roomm4"]], *Game.config["game"]["start_coordsm4"])
+
 
         for room in self.rooms:
-            room.entities.insert(0, self.player)
+            if room == self.rooms[4]:
+                room.entities.insert(0, self.monster1)
+                room.entities.insert(1, self.monster2)
+                room.entities.insert(2, self.monster3)
+                room.entities.insert(3, self.monster4)
+                room.entities.insert(4, self.player)
+            else:
+                room.entities.insert(4, self.player)
 
     def get_current_room(self):
         return self.player.room
@@ -242,16 +276,32 @@ class Game:
             quit()
         else:
             item = None
+            act = None
             if len(action) > 1:
                 action = action.replace(" ", "")
                 item = self.player.inventory.get(action[0])
                 action = action[1]
-
             for entity in nearby_entities:
                 if action == entity.graphic:
                     entity.interact(item)
                     input("premi un tasto per continuare...")
                     break
+        direct = ["N","S","E","W"]
+        monsters = [self.monster1,self.monster2,self.monster3,self.monster4]
+        for m in monsters:
+            v = choice(direct)
+            if v == "N":
+                m.move(Directions.N,self.player.x,self.player.y)
+            elif v == "S":
+                m.move(Directions.S,self.player.x,self.player.y)
+            elif v == "E":
+                m.move(Directions.E,self.player.x,self.player.y)
+            elif v == "W":
+                m.move(Directions.W,self.player.x,self.player.y)
+        for i in monsters:
+            if [i.x,i.y] == [self.player.x,self.player.y]:
+                g.game_over("Ti sei fatto prendere ,peccato")
+ 
 
 
 class Room:

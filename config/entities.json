@@ -20,12 +20,13 @@
             "no-item": {
                 "message": "Oh finalmente ho qualcosa per parificare le sedie",
                 "transform": " ",
-                "pickup": true
+                "pickup": true,
+                "remove_from_inventory" : true
             }
         }
     },
     "B": {
-        "name": "",
+        "name": "Bomba",
         "description": "e' una bomba (no doppi sensi!)",
         "color": "red",
         "interactions": {
@@ -35,8 +36,9 @@
             },
 
             "V": {
-                "message": "tagli con attenzione un filo che penzola da un lato dell'ordigno...",
-                "pickup": true 
+                "message": "Disattivi la bomba con estrema attenzione",
+                "transform": "J",
+                "remove_from_inventory" : true 
             },
 
             "L": {
@@ -88,14 +90,27 @@
             }
         }
     },
+    "4": {
+    "name": "porta",
+    "description": "e' una porta",
+    "color": "blue",
+    "interactions": {
+        "no-item": {
+            "message": "si apre",
+            "move_to_room": 4
+        }
+    }
+    },
+
     "Q": {
-        "name": "quadro",
-        "description": "e' proprio un bel quadro",
+        "name": "Tavolo degli attrezzi",
+        "description": "Serve per costruire",
         "color": "blue",
         "interactions": {
-            "no-item": {
-                "message": "spostando il quadro ti accorgi che dietro nasconte una cassaforte",
-                "transform": "F"
+            "J": {
+                "message": "Con la polvere da sparo ricavi della TNT",
+                "transform": "T",
+                "remove_from_inventory": true
             }
         }
     },
@@ -177,7 +192,7 @@
     "description": "statua di pietra ancora in buone condizioni... ha un qualcosa di strano",
     "color" : "magenta",
     "interactions" : {"no-item":{"message":"Sbatti il mignolo sulla statua e perdi la cristianità"},
-                      "B":{"message":"fai esplodere la bomba e distruggi la statua",
+                      "T":{"message":"fai esplodere la bomba e distruggi la statua",
                       "transform":" "
             }
         }
@@ -193,11 +208,30 @@
     "color" : "red",
     "interactions" : {"no-item":{"message":"mentre ti avvicini molla improvvisamente una scoreggia"},
                       "I":{"message": "gli disegni sulla faccia con il pennarello"},
-                      "F":{"message": "Pidgeot fa fuori la guardia",
+                      "P":{"message": "Pidgeot fa fuori la guardia",
                       "transform" : " "}}},
     "-":{"name":"porta",
     "description":"è chiusa a chiave",
     "color": "yellow",
     "interactions":{"no-item":{"messsage":"non si apre"},
                    "K":{"message":"si apre",
-                   "transform": " "}}}}
+                   "transform": " "}}},
+    "J":{"name":"polvere da sparo",
+    "description":"é polvere da sparo",
+    "color" : "x",
+    "interactions":{"no-item":{"message":"la raccogli",
+                    "pickup": true,
+                    "transform":" "}
+                }
+            },
+    "T":{"name":"TNT",
+        "description":"do you like to play with TNT",
+        "color":"red",
+        "interactions":{"no-item":{"message":"la raccogli",
+                        "pickup":true,
+                    "transform": " "}
+        }
+    }
+}
+
+

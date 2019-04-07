@@ -1,4 +1,12 @@
 {
-    "start_room": 0,
-    "start_coords": [16, 5]
+    "start_roomp": 4,
+    "start_roomm1":4,
+    "start_roomm2":4,
+    "start_roomm3":4,
+    "start_roomm4":4,
+    "start_coordsp": [16, 5],
+    "start_coordsm1": [17,11],
+    "start_coordsm2": [15,8],
+    "start_coordsm3": [5, 9],
+    "start_coordsm4": [7,14]
 }
